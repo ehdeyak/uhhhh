@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/gif" href="https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif"/>
+  <link rel="stylesheet" href="">
+  </head>
+<body>
+  
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Roboto:100,400,500i,700");
+    * {
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0px;
+      }
+    .topwrap {
+      position: relative;
+      height: 100px;
+      border-bottom: 4px solid black;
+      }
+    .topwrap h1 {
+      position: absolute;
+      margin: 0px;
+      bottom: 0px;
+      left: 20px;
+      font-size: 50px;
+      line-height: 40px;
+      }
+    .topwrap nav {
+      position: absolute;
+      bottom: 0px;
+      right: 20px;
+      font-size: 30px;
+      }
+    .topwrap ul {
+      list-style-type: none;
+      position: relative;
+      float: right;
+      margin: 0px;
+      padding: 0px;
+      }
+    .topwrap li {
+      float: left;
+      padding: 0px 20px;
+      }
+    .topwrap a {
+      color: black;
+      text-decoration: none;
+    }
+    #line {
+      position: relative;
+      height: 4px;
+      background: black;
+      transition: 0.5s ease;
+    </style>
+  
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+  
+  <div class="topwrap">
+    <h1 id="home"><a href="#home">АЯТ.COM</a></h1>
+    <nav>
+      <div id="line"></div>
+      <ul id="menu">
+        <a href="#A"><li id="A">here</li></a>
+        <a href="#B"><li id="B">come</li></a>
+        <a href="#C"><li id="C">dat</li></a>
+        <a href="#D"><li id="D">boi!!!!!!</li></a>
+        </ul>
+      </nav>
+    </div>
+  
+  <ul>
+    <li> Mouse over menu items for line animation
+    <li> Menu items are different lengths to demonstrate line resizing
+    <li> Click on menu item and mouse over other items to see animation with selected page
+    <li> Click on title to "go home" and thus reset line animation
+    <li> Click on the back and forward browser buttons to see the line follow along with page history/hash changes
+    <li> Refresh the page and wach as the line doesn't reset or do anything (just like it should)
+    <li> o shit waddup!
+    </ul>
+  
+  
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+<!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+  
+  <script>
+   
+   // dat boi
+document.body.appendChild(document.createElement('img')).id='yooo';document.getElementById('yooo').src="https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif";document.getElementById('yooo').style.position='absolute';document.getElementById('yooo').style.top='30%';document.getElementById('yooo').style.left='30%';document.onmousemove=function(e){document.getElementById('yooo').style.transform='rotate('+e.clientX+'deg)';document.getElementsByTagName('title')[0].innerHTML = ['&#128056','&#128056&#128056','&#128056&#128056&#128056','&#128056&#128056&#128056&#128056','&#128056&#128056&#128056&#128056&#128056','&#128056&#128056&#128056&#128056&#128056&#128056','&#128056&#128056&#128056&#128056&#128056&#128056&#128056'][(1-((window.innerWidth-e.clientX)/window.innerWidth))*7|0];};
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    
+    (function setEvents() {
+      var line = document.getElementById('line'),
+          tabHome = document.getElementById('home'),
+          menu = document.getElementById('menu'),
+          tabA = document.getElementById('A'),
+          tabB = document.getElementById('B'),
+          tabC = document.getElementById('C'),
+          tabD = document.getElementById('D'),
+          lineWL = {};
+      ////////////////////////////////////////
+      function menuOver() {
+        // mouseover animation
+        line.style.width = this.offsetWidth + 'px';
+        line.style.left = this.offsetLeft + 'px';
+      }  
+      function menuOut() {
+        // mouseout animation
+        line.style.width = lineWL.width + 'px';
+        line.style.left = lineWL.left + 'px';
+      }
+      function setActive() {
+        // set mouseout state to tab corresponding to active page
+        switch (window.location.hash.split('#')[1]) {
+          default: lineWL = { width: menu.offsetWidth, left: 0 }; break;
+          case 'home': lineWL = { width: menu.offsetWidth, left: 0 }; break;
+          case 'A': lineWL = { width: tabA.offsetWidth, left: tabA.offsetLeft }; break;
+          case 'B': lineWL = { width: tabB.offsetWidth, left: tabB.offsetLeft }; break;
+          case 'C': lineWL = { width: tabC.offsetWidth, left: tabC.offsetLeft }; break;
+          case 'D': lineWL = { width: tabD.offsetWidth, left: tabD.offsetLeft }; break;
+        }
+        menuOut();
+      }
+      ////////////////////////////////////////
+      // mouseover and mouseout
+      menu.onmouseout = menuOut;
+      tabA.onmouseover = menuOver;
+      tabB.onmouseover = menuOver;
+      tabC.onmouseover = menuOver;
+      tabD.onmouseover = menuOver;
+      // History/loading changes
+      window.onpopstate = setActive;
+      window.onbeforeunload = setActive;
+      window.onload = setActive; // initialize line position for smooth first transition
+    })();
+    
+    </script>
+  
+  </body>
+</html>
