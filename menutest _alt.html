@@ -55,7 +55,7 @@
       position: relative;
       height: 4px;
       background: black;
-      transition: 0.5s ease;
+      transition: 0.4s;
     </style>
   
 <!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
@@ -74,8 +74,9 @@
         </ul>
       </nav>
     </div>
-  
-  <ul>
+
+  <br>
+  <ul> <b style="font-size:30px">Directions:</b>
     <li> Mouse over menu items for line animation
     <li> Menu items are different lengths to demonstrate line resizing
     <li> Click on menu item and mouse over other items to see animation with selected page
@@ -92,12 +93,12 @@
   
   <script>
    
-   // dat boi
+  // dat boi - not important unless you really want to parse it out
 document.body.appendChild(document.createElement('img')).id='yooo';document.getElementById('yooo').src="https://media.giphy.com/media/xohHbwcnOhqbS/giphy.gif";document.getElementById('yooo').style.position='absolute';document.getElementById('yooo').style.top='30%';document.getElementById('yooo').style.left='30%';document.onmousemove=function(e){document.getElementById('yooo').style.transform='rotate('+e.clientX+'deg)';document.getElementsByTagName('title')[0].innerHTML = ['&#128056','&#128056&#128056','&#128056&#128056&#128056','&#128056&#128056&#128056&#128056','&#128056&#128056&#128056&#128056&#128056','&#128056&#128056&#128056&#128056&#128056&#128056','&#128056&#128056&#128056&#128056&#128056&#128056&#128056'][(1-((window.innerWidth-e.clientX)/window.innerWidth))*7|0];};
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    
+    // important stuff --> set the event handlers to control menu line length and position
     (function setEvents() {
       var line = document.getElementById('line'),
           tabHome = document.getElementById('home'),
@@ -107,19 +108,24 @@ document.body.appendChild(document.createElement('img')).id='yooo';document.getE
           tabC = document.getElementById('C'),
           tabD = document.getElementById('D'),
           lineWL = {};
-      ////////////////////////////////////////
+      
+      
       function menuOver() {
-        // mouseover animation
+        // mouseover animation - move line to currently-moused-over menu tab
         line.style.width = this.offsetWidth + 'px';
         line.style.left = this.offsetLeft + 'px';
       }  
       function menuOut() {
-        // mouseout animation
+        // mouseout animation - reset line width and position to active menu tab when you mouseoff
+        // lineWL is set by "setActive()"
         line.style.width = lineWL.width + 'px';
         line.style.left = lineWL.left + 'px';
       }
       function setActive() {
-        // set mouseout state to tab corresponding to active page
+        // this function is run anytime the history/loading state changes (ie when any menu tabs are cliked)
+        //   --> this acts as a proxy for clicking since all the menu tabs are links
+        // use hash address from url (set in tab href) to determine which tab is active
+        // set lineWL parameters to corresponding active tab width and position
         switch (window.location.hash.split('#')[1]) {
           default: lineWL = { width: menu.offsetWidth, left: 0 }; break;
           case 'home': lineWL = { width: menu.offsetWidth, left: 0 }; break;
@@ -128,15 +134,18 @@ document.body.appendChild(document.createElement('img')).id='yooo';document.getE
           case 'C': lineWL = { width: tabC.offsetWidth, left: tabC.offsetLeft }; break;
           case 'D': lineWL = { width: tabD.offsetWidth, left: tabD.offsetLeft }; break;
         }
+        // run menuOut() after new lineWL is set (after url/hash changes) to move line to new active tab
         menuOut();
       }
-      ////////////////////////////////////////
+      
+      
       // mouseover and mouseout
       menu.onmouseout = menuOut;
       tabA.onmouseover = menuOver;
       tabB.onmouseover = menuOver;
       tabC.onmouseover = menuOver;
       tabD.onmouseover = menuOver;
+      
       // History/loading changes
       window.onpopstate = setActive;
       window.onbeforeunload = setActive;
